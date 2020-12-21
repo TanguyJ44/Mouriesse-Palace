@@ -125,25 +125,15 @@
        <rect>
         <x>9</x>
         <y>-1</y>
-        <width>471</width>
+        <width>491</width>
         <height>681</height>
        </rect>
       </property>
       <widget class="QWidget" name="pageList">
-       <widget class="QTableWidget" name="tableWidgetClient">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>81</y>
-          <width>471</width>
-          <height>581</height>
-         </rect>
-        </property>
-       </widget>
        <widget class="QLabel" name="labelTitleList">
         <property name="geometry">
          <rect>
-          <x>110</x>
+          <x>120</x>
           <y>20</y>
           <width>224</width>
           <height>33</height>
@@ -203,6 +193,39 @@
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
+       <widget class="QListWidget" name="listWidgetDrag">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>80</y>
+          <width>481</width>
+          <height>581</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="cursor" stdset="0">
+         <cursorShape>ArrowCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: 0px;</string>
+        </property>
+        <property name="dragEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="spacing">
+         <number>5</number>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="pageView"/>
       <widget class="QWidget" name="pageAdd"/>
@@ -210,17 +233,17 @@
      <widget class="QStackedWidget" name="stackedWidgetRight">
       <property name="geometry">
        <rect>
-        <x>479</x>
+        <x>509</x>
         <y>-1</y>
-        <width>521</width>
+        <width>491</width>
         <height>681</height>
        </rect>
       </property>
       <widget class="QWidget" name="pageSelect">
-       <widget class="QLabel" name="labelTitleList_2">
+       <widget class="QLabel" name="labelTitleReserv">
         <property name="geometry">
          <rect>
-          <x>110</x>
+          <x>100</x>
           <y>20</y>
           <width>311</width>
           <height>33</height>
@@ -238,8 +261,140 @@
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
+       <widget class="QListWidget" name="listWidgetReserv">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>80</y>
+          <width>481</width>
+          <height>581</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="cursor" stdset="0">
+         <cursorShape>ArrowCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: 0px;</string>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="tabKeyNavigation">
+         <bool>false</bool>
+        </property>
+        <property name="showDropIndicator" stdset="0">
+         <bool>false</bool>
+        </property>
+        <property name="dragEnabled">
+         <bool>false</bool>
+        </property>
+        <property name="dragDropMode">
+         <enum>QAbstractItemView::NoDragDrop</enum>
+        </property>
+        <property name="defaultDropAction">
+         <enum>Qt::IgnoreAction</enum>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>60</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="textElideMode">
+         <enum>Qt::ElideMiddle</enum>
+        </property>
+        <property name="spacing">
+         <number>40</number>
+        </property>
+        <property name="viewMode">
+         <enum>QListView::IconMode</enum>
+        </property>
+        <property name="itemAlignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
       </widget>
-      <widget class="QWidget" name="pageFocus"/>
+      <widget class="QWidget" name="pageFocus">
+       <widget class="QListWidget" name="listWidgetDrop">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>140</y>
+          <width>463</width>
+          <height>182</height>
+         </rect>
+        </property>
+        <property name="cursor" stdset="0">
+         <cursorShape>CrossCursor</cursorShape>
+        </property>
+        <property name="acceptDrops">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-image: url(&quot;C:/Users/Tanguy/Desktop/res/drop_zone.png&quot;);
+background-position: center;
+border: 0px;</string>
+        </property>
+        <property name="dragDropMode">
+         <enum>QAbstractItemView::DragDrop</enum>
+        </property>
+        <property name="viewMode">
+         <enum>QListView::IconMode</enum>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="tableWidgetReservation">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>330</y>
+          <width>461</width>
+          <height>301</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButtonBackHome">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>640</y>
+          <width>461</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>&lt;- Retour</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelTitleFocus">
+        <property name="geometry">
+         <rect>
+          <x>13</x>
+          <y>20</y>
+          <width>451</width>
+          <height>33</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Réservation</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </widget>
      </widget>
     </widget>
    </widget>
