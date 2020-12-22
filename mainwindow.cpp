@@ -1,8 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include "QMessageBox"
+#include <QMessageBox>
 #include <QDragEnterEvent>
-#include <QDropEvent>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -19,13 +18,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->listWidgetReserv->setAcceptDrops(false);
     ui->listWidgetReserv->setDragEnabled(false);
-    ui->listWidgetDrop->setDragEnabled(false);
+    //ui->listWidgetDrop->setDragEnabled(false);
 
-    ui->listWidgetDrag->insertItem(1, new QListWidgetItem(QIcon("C:/Users/Tanguy/Desktop/res/user.png"), "Jean-Louis Dureuille"));
-    ui->listWidgetDrag->insertItem(2, new QListWidgetItem(QIcon("C:/Users/Tanguy/Desktop/res/user.png"), "Marc Lendo"));
-    ui->listWidgetDrag->insertItem(3, new QListWidgetItem(QIcon("C:/Users/Tanguy/Desktop/res/user.png"), "Sophie Marteno"));
-    ui->listWidgetDrag->insertItem(4, new QListWidgetItem(QIcon("C:/Users/Tanguy/Desktop/res/user.png"), "Damien Prébau"));
-    ui->listWidgetDrag->insertItem(5, new QListWidgetItem(QIcon("C:/Users/Tanguy/Desktop/res/user.png"), "Alick Mouriesse"));
+    ui->listWidgetDrag->insertItem(1, new QListWidgetItem(QIcon(":user-max.png"), "Jean-Louis Dureuille"));
+    ui->listWidgetDrag->insertItem(2, new QListWidgetItem(QIcon(":user-max.png"), "Marc Lendo"));
+    ui->listWidgetDrag->insertItem(3, new QListWidgetItem(QIcon(":user-max.png"), "Sophie Marteno"));
+    ui->listWidgetDrag->insertItem(4, new QListWidgetItem(QIcon(":user-max.png"), "Damien Prébau"));
+    ui->listWidgetDrag->insertItem(5, new QListWidgetItem(QIcon(":user-max.png"), "Alick Mouriesse"));
 
     ui->listWidgetReserv->insertItem(1, this->createItem((char*) "Chambres"));
     ui->listWidgetReserv->insertItem(2, this->createItem((char*) "Repas"));
@@ -40,12 +39,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->listWidgetReserv->insertItem(11, this->createItem((char*) "Spectacles"));
     ui->listWidgetReserv->insertItem(12, this->createItem((char*) "EXIT"));
 
-    //ui->listWidgetReserv->setStyleSheet("QListWidget::item { padding-left: 10px; }");
-
-    /*QMessageBox::information(
-        this,
-        tr("Application Name"),
-        tr("An information message.") );*/
 }
 
 MainWindow::~MainWindow()
@@ -58,9 +51,9 @@ QListWidgetItem* MainWindow::createItem(char* name)
     QListWidgetItem *item = new QListWidgetItem;
     item->setText(name);
     if (name[0] != 'E') {
-        item->setIcon(QIcon("C:/Users/Tanguy/Desktop/res/calendar.png"));
+        item->setIcon(QIcon(":" + item->text() + ".png"));
     } else {
-        item->setIcon(QIcon("C:/Users/Tanguy/Desktop/res/exit.png"));
+        item->setIcon(QIcon(":exit.png"));
     }
     return item;
 }
@@ -79,7 +72,7 @@ void MainWindow::on_pushButtonLogin_clicked()
 
 void MainWindow::on_listWidgetReserv_itemDoubleClicked(QListWidgetItem *item)
 {
-    this->changeMenuData("Réservation " + item->data(0).toString());
+    this->changeMenuData("Réservation " + item->text());
 
     if (item->data(0).toString().contains("EXIT")) {
         ui->stackedWidget->setCurrentIndex(0);
@@ -97,3 +90,27 @@ void MainWindow::on_listWidgetDrag_itemDoubleClicked(QListWidgetItem *item)
 {
     ui->stackedWidgetLeft->setCurrentIndex(1);
 }
+
+void MainWindow::on_pushButtonAddClient_clicked()
+{
+    ui->stackedWidgetLeft->setCurrentIndex(2);
+}
+
+void MainWindow::on_pushButtonDelClient_clicked()
+{
+    if (ui->listWidgetDrag->selectedItems().size() != 0) {
+        QMessageBox::question(
+            this,
+            tr("Supprimer un client"),
+            tr("Étes vous sûr de vouloir supprimer le client ") + ui->listWidgetDrag->currentItem()->text(),
+            QMessageBox::Yes | QMessageBox::Cancel
+        );
+    } else {
+        QMessageBox::warning(
+            this,
+            tr("Supprimer un client"),
+            tr("Vous devez sélectionner un client avant de le supprimer !")
+        );
+    }
+}
+

@@ -32,14 +32,17 @@ set(TS_FILES 2CCPP_fr_FR.ts)
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
+        listWidget.cpp
         mainwindow.h
         mainwindow.ui
+        listWidget.h
         ${TS_FILES}
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(2CCPP
         ${PROJECT_SOURCES}
+        res.qrc
     )
 
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
@@ -51,6 +54,7 @@ else()
     else()
         add_executable(2CCPP
             ${PROJECT_SOURCES}
+            res.qrc
         )
     endif()
 

@@ -2,8 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QWidget>
 #include <QListWidgetItem>
 #include <QString>
+#include <QDropEvent>
+#include <QDragEnterEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,6 +30,10 @@ private slots:
     void on_pushButtonBackHome_clicked();
 
     void on_listWidgetDrag_itemDoubleClicked(QListWidgetItem *item);
+
+    void on_pushButtonAddClient_clicked();
+
+    void on_pushButtonDelClient_clicked();
 
 private:
     Ui::MainWindow *ui;

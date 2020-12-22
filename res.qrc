@@ -1,6 +1,21 @@
-<!DOCTYPE RCC>
-<RCC version="1.0">
+<!DOCTYPE RCC><RCC version="1.0">
 <qresource>
-    <file alias="user.png">C:\Users\Tanguy\Desktop\res\user.png</file>
+  <file alias="calendar.png">C:/Users/Tanguy/Desktop/res/calendar.png</file>
+  <file alias="exit.png">C:/Users/Tanguy/Desktop/res/exit.png</file>
+  <file alias="drop_zone.png">C:/Users/Tanguy/Desktop/res/drop_zone.png</file>
+  <file alias="login_background01.png">C:/Users/Tanguy/Desktop/res/login_background01.png</file>
+  <file alias="user-max.png">C:/Users/Tanguy/Desktop/res/user-max.png</file>
+
+  <file alias="Chambres.png">C:/Users/Tanguy/Desktop/res/Chambres.png</file>
+  <file alias="Repas.png">C:/Users/Tanguy/Desktop/res/Repas.png</file>
+  <file alias="SPA.png">C:/Users/Tanguy/Desktop/res/SPA.png</file>
+  <file alias="Room Services.png">C:/Users/Tanguy/Desktop/res/Room Services.png</file>
+  <file alias="Taxis.png">C:/Users/Tanguy/Desktop/res/Taxis.png</file>
+  <file alias="Avions.png">C:/Users/Tanguy/Desktop/res/Avions.png</file>
+  <file alias="Golf.png">C:/Users/Tanguy/Desktop/res/Golf.png</file>
+  <file alias="Tennis.png">C:/Users/Tanguy/Desktop/res/Tennis.png</file>
+  <file alias="Massages.png">C:/Users/Tanguy/Desktop/res/Massages.png</file>
+  <file alias="Bateaux.png">C:/Users/Tanguy/Desktop/res/Bateaux.png</file>
+  <file alias="Spectacles.png">C:/Users/Tanguy/Desktop/res/Spectacles.png</file>
 </qresource>
 </RCC>

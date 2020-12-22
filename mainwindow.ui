@@ -46,6 +46,9 @@
         <height>681</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -154,7 +157,7 @@
        <widget class="QPushButton" name="pushButtonAddClient">
         <property name="geometry">
          <rect>
-          <x>0</x>
+          <x>10</x>
           <y>50</y>
           <width>31</width>
           <height>23</height>
@@ -167,7 +170,7 @@
        <widget class="QPushButton" name="pushButtonDelClient">
         <property name="geometry">
          <rect>
-          <x>30</x>
+          <x>40</x>
           <y>50</y>
           <width>31</width>
           <height>23</height>
@@ -196,9 +199,9 @@
        <widget class="QListWidget" name="listWidgetDrag">
         <property name="geometry">
          <rect>
-          <x>0</x>
+          <x>10</x>
           <y>80</y>
-          <width>481</width>
+          <width>471</width>
           <height>581</height>
          </rect>
         </property>
@@ -227,7 +230,61 @@
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="pageView"/>
+      <widget class="QWidget" name="pageView">
+       <widget class="QLabel" name="labelTitleClientInfo">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>20</y>
+          <width>481</width>
+          <height>33</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Informations Client</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelBgClientInfo">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>80</y>
+          <width>461</width>
+          <height>581</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: white;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelLogoClientInfo">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>100</y>
+          <width>131</width>
+          <height>141</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>../../Desktop/res/user-max.png</pixmap>
+        </property>
+       </widget>
+      </widget>
       <widget class="QWidget" name="pageAdd"/>
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetRight">
@@ -243,7 +300,7 @@
        <widget class="QLabel" name="labelTitleReserv">
         <property name="geometry">
          <rect>
-          <x>100</x>
+          <x>90</x>
           <y>20</y>
           <width>311</width>
           <height>33</height>
@@ -266,7 +323,7 @@
          <rect>
           <x>0</x>
           <y>80</y>
-          <width>481</width>
+          <width>471</width>
           <height>581</height>
          </rect>
         </property>
@@ -297,7 +354,7 @@
          <bool>false</bool>
         </property>
         <property name="dragDropMode">
-         <enum>QAbstractItemView::NoDragDrop</enum>
+         <enum>QAbstractItemView::DragDrop</enum>
         </property>
         <property name="defaultDropAction">
          <enum>Qt::IgnoreAction</enum>
@@ -311,8 +368,17 @@
         <property name="textElideMode">
          <enum>Qt::ElideMiddle</enum>
         </property>
+        <property name="resizeMode">
+         <enum>QListView::Adjust</enum>
+        </property>
         <property name="spacing">
          <number>40</number>
+        </property>
+        <property name="gridSize">
+         <size>
+          <width>156</width>
+          <height>158</height>
+         </size>
         </property>
         <property name="viewMode">
          <enum>QListView::IconMode</enum>
@@ -323,11 +389,11 @@
        </widget>
       </widget>
       <widget class="QWidget" name="pageFocus">
-       <widget class="QListWidget" name="listWidgetDrop">
+       <widget class="ListWidget" name="listWidgetDrop">
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>140</y>
+          <y>90</y>
           <width>463</width>
           <height>182</height>
          </rect>
@@ -344,7 +410,10 @@ background-position: center;
 border: 0px;</string>
         </property>
         <property name="dragDropMode">
-         <enum>QAbstractItemView::DragDrop</enum>
+         <enum>QAbstractItemView::InternalMove</enum>
+        </property>
+        <property name="defaultDropAction">
+         <enum>Qt::MoveAction</enum>
         </property>
         <property name="viewMode">
          <enum>QListView::IconMode</enum>
@@ -354,9 +423,9 @@ border: 0px;</string>
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>330</y>
+          <y>280</y>
           <width>461</width>
-          <height>301</height>
+          <height>351</height>
          </rect>
         </property>
        </widget>
@@ -394,6 +463,22 @@ border: 0px;</string>
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
+       <widget class="QLabel" name="labelCountReserv">
+        <property name="geometry">
+         <rect>
+          <x>16</x>
+          <y>60</y>
+          <width>451</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Il reste 0 réservations de disponible</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
       </widget>
      </widget>
     </widget>
@@ -411,6 +496,13 @@ border: 0px;</string>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ListWidget</class>
+   <extends>QListWidget</extends>
+   <header>listWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
