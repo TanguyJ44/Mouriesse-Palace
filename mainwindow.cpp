@@ -114,3 +114,12 @@ void MainWindow::on_pushButtonDelClient_clicked()
     }
 }
 
+void MainWindow::on_pushButtonInfoBack_clicked()
+{
+    ui->stackedWidgetLeft->setCurrentIndex(0);
+}
+
+void MainWindow::on_pushButtonAddCancel_clicked()
+{
+    ui->stackedWidgetLeft->setCurrentIndex(0);
+}

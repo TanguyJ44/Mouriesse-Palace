@@ -35,6 +35,10 @@ private slots:
 
     void on_pushButtonDelClient_clicked();
 
+    void on_pushButtonInfoBack_clicked();
+
+    void on_pushButtonAddCancel_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

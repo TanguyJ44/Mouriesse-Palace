@@ -10,13 +10,11 @@ class ListWidget : public QListWidget
 
 public:
     ListWidget(QWidget *parent = nullptr);
-    ~ListWidget();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dragMoveEvent(QDragMoveEvent *event) override;
     void dropEvent(QDropEvent *event) override;
-    void mousePressEvent(QMouseEvent *event) override;
 
 };
 

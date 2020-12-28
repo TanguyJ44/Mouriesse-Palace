@@ -33,9 +33,11 @@ set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
         listWidget.cpp
+        client.cpp
         mainwindow.h
         mainwindow.ui
         listWidget.h
+        client.h
         ${TS_FILES}
 )
 
