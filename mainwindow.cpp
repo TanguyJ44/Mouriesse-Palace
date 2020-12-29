@@ -46,11 +46,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->comboBoxAddGenre->addItem("Monsieur");
     ui->comboBoxAddGenre->addItem("Madame");
     ui->comboBoxAddGenre->addItem("Mademoiselle");
+    ui->comboBoxInfoGenre->addItem("Monsieur");
+    ui->comboBoxInfoGenre->addItem("Madame");
+    ui->comboBoxInfoGenre->addItem("Mademoiselle");
 
     ui->comboBoxAddPay->addItem("CB");
     ui->comboBoxAddPay->addItem("Chèque");
     ui->comboBoxAddPay->addItem("Virement");
     ui->comboBoxAddPay->addItem("Liquide");
+    ui->comboBoxInfoPay->addItem("CB");
+    ui->comboBoxInfoPay->addItem("Chèque");
+    ui->comboBoxInfoPay->addItem("Virement");
+    ui->comboBoxInfoPay->addItem("Liquide");
 
 }
 
@@ -83,11 +90,16 @@ void MainWindow::updateListClients()
         QListWidgetItem *itemClient = new QListWidgetItem;
 
         itemClient->setText(QString::fromStdString(clients[i].getFirstName() + " " + clients[i].getLastName()));
-        itemClient->setIcon(QIcon(":user-max.png"));
+        if (clients[i].getGenre() == 0) {
+            itemClient->setIcon(QIcon(":user-max.png"));
+        } else {
+            itemClient->setIcon(QIcon(":user-girl-max.png"));
+        }
         itemClient->setData(Qt::UserRole, clients[i].getId());
 
         ui->listWidgetDrag->insertItem(1, itemClient);
     }
+    ui->labelClientCount->setText(QString::fromStdString("Clients total : " + std::to_string(clients.size())));
     ui->listWidgetDrag->repaint();
 }
 
@@ -124,9 +136,24 @@ void MainWindow::on_listWidgetDrag_itemDoubleClicked(QListWidgetItem *item)
         }
     }
 
-    ui->labelInfoName->setText(QString::fromStdString(clientInfo.getFirstName() + " " + clientInfo.getLastName()));
-    //ui->labelInfoID->setText(QString::fromStdString("#" + clientInfo.getId()));
+    if (clientInfo.getGenre() == 0) {
+        ui->labelLogoClientInfo->setPixmap(QPixmap(":user-max.png"));
+    } else {
+        ui->labelLogoClientInfo->setPixmap(QPixmap(":user-girl-max.png"));
+    }
 
+    ui->lineEditInfoFirstName->setText(QString::fromStdString(clientInfo.getFirstName()));
+    ui->lineEditInfoLastName->setText(QString::fromStdString(clientInfo.getLastName()));
+    ui->labelInfoID->setText(QString::fromStdString("#" + std::to_string(clientInfo.getId())));
+    ui->comboBoxInfoGenre->setCurrentIndex(clientInfo.getGenre());
+    ui->lineEditInfoPhone->setText(QString::fromStdString(clientInfo.getPhoneNumber()));
+    ui->lineEditInfoMail->setText(QString::fromStdString(clientInfo.getEmail()));
+    ui->lineEditInfoAddress->setText(QString::fromStdString(clientInfo.getAddress()));
+    ui->lineEditInfoCity->setText(QString::fromStdString(clientInfo.getCity()));
+    ui->lineEditInfoCP->setText(QString::fromStdString(clientInfo.getCP()));
+    ui->comboBoxInfoPay->setCurrentIndex(clientInfo.getGenre());
+    ui->spinBoxInfoAssoc->setValue(clientInfo.getAssociateMembers());
+    ui->textEditInfoInfo->setText(QString::fromStdString(clientInfo.getInfo()));
 
     ui->stackedWidgetLeft->setCurrentIndex(1);
 }
@@ -222,9 +249,71 @@ void MainWindow::on_pushButtonAddValide_clicked()
         QMessageBox::information(
             this,
             tr("Ajouter un client"),
-            tr("Le client a bien été ajouté -> ") + ui->lineEditAddFirstName->text() + " " + ui->lineEditAddLastName->text()
+            tr("Le client a bien été ajouté !")
         );
 
         clearAddClient();
+    }
+}
+
+void MainWindow::on_comboBoxAddGenre_currentIndexChanged(int index)
+{
+    if (index == 0) {
+        ui->labelLogoClientAdd->setPixmap(QPixmap(":user-max.png"));
+    } else {
+        ui->labelLogoClientAdd->setPixmap(QPixmap(":user-girl-max.png"));
+    }
+}
+
+void MainWindow::on_comboBoxInfoGenre_currentIndexChanged(int index)
+{
+    if (index == 0) {
+        ui->labelLogoClientInfo->setPixmap(QPixmap(":user-max.png"));
+    } else {
+        ui->labelLogoClientInfo->setPixmap(QPixmap(":user-girl-max.png"));
+    }
+}
+
+void MainWindow::on_pushButtonInfoUpdate_clicked()
+{
+    int indexClient = 0;
+
+    for (size_t i = 0; i < clients.size(); i++) {
+        std::string formatId = ui->labelInfoID->text().toStdString();
+        if (clients[i].getId() == std::stoi(ui->labelInfoID->text().replace(0, 1, "").toStdString())) {
+            indexClient = i;
+        }
+    }
+
+    clients[indexClient].setFirstName(ui->lineEditInfoFirstName->text().toStdString());
+    clients[indexClient].setLastName(ui->lineEditInfoLastName->text().toStdString());
+    clients[indexClient].setGenre(ui->comboBoxInfoGenre->currentIndex());
+    clients[indexClient].setPhoneNumber(ui->lineEditInfoPhone->text().toStdString());
+    clients[indexClient].setEmail(ui->lineEditInfoMail->text().toStdString());
+    clients[indexClient].setAddress(ui->lineEditInfoAddress->text().toStdString());
+    clients[indexClient].setCity(ui->lineEditInfoCity->text().toStdString());
+    clients[indexClient].setCP(ui->lineEditInfoCP->text().toStdString());
+    clients[indexClient].setPayment(ui->comboBoxInfoPay->currentIndex());
+    clients[indexClient].setAssociateMembers(ui->spinBoxInfoAssoc->value());
+    clients[indexClient].setInfo(ui->textEditInfoInfo->toPlainText().toStdString());
+
+    updateListClients();
+
+    QMessageBox::information(
+        this,
+        tr("Mise à jour client"),
+        tr("Le client a bien été mis à jour !")
+    );
+}
+
+
+void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
+{
+    for (int i = 0; i < ui->listWidgetDrag->count(); i++) {
+        if (ui->listWidgetDrag->item(i)->text().contains(arg1)) {
+            ui->listWidgetDrag->item(i)->setHidden(false);
+        } else {
+            ui->listWidgetDrag->item(i)->setHidden(true);
+        }
     }
 }

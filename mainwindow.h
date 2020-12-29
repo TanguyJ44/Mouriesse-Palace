@@ -45,6 +45,14 @@ private slots:
 
     void on_pushButtonAddValide_clicked();
 
+    void on_comboBoxAddGenre_currentIndexChanged(int index);
+
+    void on_comboBoxInfoGenre_currentIndexChanged(int index);
+
+    void on_pushButtonInfoUpdate_clicked();
+
+    void on_lineEditSearch_textChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
     std::vector <Client> clients;
