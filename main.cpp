@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    std::vector <Client> clients;
+    /*std::vector <Client> clients;
 
     Client c1{"Tanguy", "JOSEPH"};
     Client c2{"Michel", "DELACROIX"};
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     std::cout << "------------" << std::endl;
     std::cout << "Id: " << clients[1].getId() << std::endl;
     std::cout << "Prénom: " << clients[1].getFirstName() << std::endl;
-    std::cout << "Nom: " << clients[1].getLastName() << std::endl;
+    std::cout << "Nom: " << clients[1].getLastName() << std::endl;*/
 
     return a.exec();
 }

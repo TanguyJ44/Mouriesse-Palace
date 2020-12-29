@@ -4,6 +4,8 @@
 #include <QDragEnterEvent>
 #include <QDebug>
 
+#include <iostream>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -20,11 +22,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->listWidgetReserv->setDragEnabled(false);
     //ui->listWidgetDrop->setDragEnabled(false);
 
-    ui->listWidgetDrag->insertItem(1, new QListWidgetItem(QIcon(":user-max.png"), "Jean-Louis Dureuille"));
+    /*ui->listWidgetDrag->insertItem(1, new QListWidgetItem(QIcon(":user-max.png"), "Jean-Louis Dureuille"));
     ui->listWidgetDrag->insertItem(2, new QListWidgetItem(QIcon(":user-max.png"), "Marc Lendo"));
     ui->listWidgetDrag->insertItem(3, new QListWidgetItem(QIcon(":user-max.png"), "Sophie Marteno"));
     ui->listWidgetDrag->insertItem(4, new QListWidgetItem(QIcon(":user-max.png"), "Damien Prébau"));
-    ui->listWidgetDrag->insertItem(5, new QListWidgetItem(QIcon(":user-max.png"), "Alick Mouriesse"));
+    ui->listWidgetDrag->insertItem(5, new QListWidgetItem(QIcon(":user-max.png"), "Alick Mouriesse"));*/
+
+    updateListClients();
 
     ui->listWidgetReserv->insertItem(1, this->createItem((char*) "Chambres"));
     ui->listWidgetReserv->insertItem(2, this->createItem((char*) "Repas"));
@@ -38,6 +42,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->listWidgetReserv->insertItem(10, this->createItem((char*) "Bateaux"));
     ui->listWidgetReserv->insertItem(11, this->createItem((char*) "Spectacles"));
     ui->listWidgetReserv->insertItem(12, this->createItem((char*) "EXIT"));
+
+    ui->comboBoxAddGenre->addItem("Monsieur");
+    ui->comboBoxAddGenre->addItem("Madame");
+    ui->comboBoxAddGenre->addItem("Mademoiselle");
+
+    ui->comboBoxAddPay->addItem("CB");
+    ui->comboBoxAddPay->addItem("Chèque");
+    ui->comboBoxAddPay->addItem("Virement");
+    ui->comboBoxAddPay->addItem("Liquide");
 
 }
 
@@ -61,6 +74,21 @@ QListWidgetItem* MainWindow::createItem(char* name)
 void MainWindow::changeMenuData(QString name)
 {
     ui->labelTitleFocus->setText(name);
+}
+
+void MainWindow::updateListClients()
+{
+    ui->listWidgetDrag->clear();
+    for (size_t i = 0; i < clients.size(); i++) {
+        QListWidgetItem *itemClient = new QListWidgetItem;
+
+        itemClient->setText(QString::fromStdString(clients[i].getFirstName() + " " + clients[i].getLastName()));
+        itemClient->setIcon(QIcon(":user-max.png"));
+        itemClient->setData(Qt::UserRole, clients[i].getId());
+
+        ui->listWidgetDrag->insertItem(1, itemClient);
+    }
+    ui->listWidgetDrag->repaint();
 }
 
 void MainWindow::on_pushButtonLogin_clicked()
@@ -88,6 +116,18 @@ void MainWindow::on_pushButtonBackHome_clicked()
 
 void MainWindow::on_listWidgetDrag_itemDoubleClicked(QListWidgetItem *item)
 {
+    Client clientInfo;
+
+    for (size_t i = 0; i < clients.size(); i++) {
+        if (clients[i].getId() == item->data(Qt::UserRole).toInt()) {
+            clientInfo = clients[i];
+        }
+    }
+
+    ui->labelInfoName->setText(QString::fromStdString(clientInfo.getFirstName() + " " + clientInfo.getLastName()));
+    //ui->labelInfoID->setText(QString::fromStdString("#" + clientInfo.getId()));
+
+
     ui->stackedWidgetLeft->setCurrentIndex(1);
 }
 
@@ -99,12 +139,21 @@ void MainWindow::on_pushButtonAddClient_clicked()
 void MainWindow::on_pushButtonDelClient_clicked()
 {
     if (ui->listWidgetDrag->selectedItems().size() != 0) {
-        QMessageBox::question(
-            this,
-            tr("Supprimer un client"),
-            tr("Étes vous sûr de vouloir supprimer le client ") + ui->listWidgetDrag->currentItem()->text(),
-            QMessageBox::Yes | QMessageBox::Cancel
-        );
+        if (QMessageBox::question(
+                    this,
+                    tr("Supprimer un client"),
+                    tr("Étes vous sûr de vouloir supprimer le client ") + ui->listWidgetDrag->currentItem()->text(),
+                    QMessageBox::Yes | QMessageBox::Cancel
+                ) == QMessageBox::Yes) {
+
+            for (size_t i = 0; i < clients.size(); i++) {
+                if (clients[i].getId() == ui->listWidgetDrag->currentItem()->data(Qt::UserRole).toInt()) {
+                    clients.erase(clients.begin() + i);
+                }
+            }
+
+            updateListClients();
+        }
     } else {
         QMessageBox::warning(
             this,
@@ -114,6 +163,20 @@ void MainWindow::on_pushButtonDelClient_clicked()
     }
 }
 
+void MainWindow::clearAddClient()
+{
+    ui->comboBoxAddGenre->setCurrentIndex(0);
+    ui->lineEditAddLastName->setText("");
+    ui->lineEditAddFirstName->setText("");
+    ui->lineEditAddPhone->setText("");
+    ui->lineEditAddEmail->setText("");
+    ui->lineEditAddAddress->setText("");
+    ui->lineEditAddCity->setText("");
+    ui->lineEditAddCP->setText("");
+    ui->comboBoxAddPay->setCurrentIndex(0);
+    ui->spinBoxAddAssoc->setValue(0);
+}
+
 void MainWindow::on_pushButtonInfoBack_clicked()
 {
     ui->stackedWidgetLeft->setCurrentIndex(0);
@@ -121,5 +184,47 @@ void MainWindow::on_pushButtonInfoBack_clicked()
 
 void MainWindow::on_pushButtonAddCancel_clicked()
 {
+    clearAddClient();
     ui->stackedWidgetLeft->setCurrentIndex(0);
+}
+
+void MainWindow::on_pushButtonAddValide_clicked()
+{
+    // Create client
+
+    if (ui->lineEditAddLastName->text().isEmpty() == true || ui->lineEditAddFirstName->text().isEmpty() == true) {
+        QMessageBox::warning(
+            this,
+            tr("Ajouter un client"),
+            tr("Vous devez donner un Nom et un Prénom pour créer un client !")
+        );
+    } else {
+        Client newClient{
+            ui->comboBoxAddGenre->currentIndex(),
+            ui->comboBoxAddPay->currentIndex(),
+            ui->spinBoxAddAssoc->value(),
+            ui->lineEditAddFirstName->text().toUtf8().constData(),
+            ui->lineEditAddLastName->text().toUtf8().constData(),
+            ui->lineEditAddPhone->text().toUtf8().constData(),
+            ui->lineEditAddEmail->text().toUtf8().constData(),
+            ui->lineEditAddAddress->text().toUtf8().constData(),
+            ui->lineEditAddCity->text().toUtf8().constData(),
+            ui->lineEditAddCP->text().toUtf8().constData(),
+            ""
+        };
+
+        clients.push_back(newClient);
+
+        updateListClients();
+
+        ui->stackedWidgetLeft->setCurrentIndex(0);
+
+        QMessageBox::information(
+            this,
+            tr("Ajouter un client"),
+            tr("Le client a bien été ajouté -> ") + ui->lineEditAddFirstName->text() + " " + ui->lineEditAddLastName->text()
+        );
+
+        clearAddClient();
+    }
 }

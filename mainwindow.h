@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "client.h"
 #include <QMainWindow>
 #include <QWidget>
 #include <QListWidgetItem>
@@ -20,9 +21,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void clearAddClient();
+
 protected:
     QListWidgetItem* createItem(char* name);
     void changeMenuData(QString name);
+    void updateListClients();
 
 private slots:
     void on_pushButtonLogin_clicked();
@@ -39,8 +43,11 @@ private slots:
 
     void on_pushButtonAddCancel_clicked();
 
+    void on_pushButtonAddValide_clicked();
+
 private:
     Ui::MainWindow *ui;
+    std::vector <Client> clients;
 };
 
 #endif // MAINWINDOW_H
