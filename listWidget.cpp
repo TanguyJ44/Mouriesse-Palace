@@ -1,4 +1,5 @@
 #include "listWidget.h"
+#include "mainwindow.h"
 #include <QDebug>
 #include <QTableWidget>
 
@@ -21,7 +22,8 @@ void ListWidget::dragMoveEvent(QDragMoveEvent *event)
 void ListWidget::dropEvent(QDropEvent *event)
 {
     QListWidget* list = qobject_cast<QListWidget*>(event->source());
-    qDebug() << list->currentItem()->text();
+
+    emit newReservationSent(list->currentItem()->text(), list->currentItem()->data(Qt::UserRole).toInt());
 
     clear();
 }

@@ -144,7 +144,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="472"/>
-        <location filename="mainwindow.ui" line="1206"/>
+        <location filename="mainwindow.ui" line="1235"/>
         <source>&lt;- Retour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -174,56 +174,56 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1224"/>
+        <location filename="mainwindow.ui" line="1253"/>
         <source>Réservation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1240"/>
+        <location filename="mainwindow.ui" line="1269"/>
         <source>Il reste 0 réservations de disponible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="171"/>
-        <location filename="mainwindow.cpp" line="187"/>
+        <location filename="mainwindow.cpp" line="173"/>
+        <location filename="mainwindow.cpp" line="189"/>
         <source>Supprimer un client</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="172"/>
+        <location filename="mainwindow.cpp" line="174"/>
         <source>Étes vous sûr de vouloir supprimer le client </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="188"/>
+        <location filename="mainwindow.cpp" line="190"/>
         <source>Vous devez sélectionner un client avant de le supprimer !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="225"/>
-        <location filename="mainwindow.cpp" line="251"/>
+        <location filename="mainwindow.cpp" line="227"/>
+        <location filename="mainwindow.cpp" line="253"/>
         <source>Ajouter un client</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="226"/>
+        <location filename="mainwindow.cpp" line="228"/>
         <source>Vous devez donner un Nom et un Prénom pour créer un client !</source>
         <oldsource>Vous devez donner au moins un Nom et un Prénom pour créer un client !</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="252"/>
+        <location filename="mainwindow.cpp" line="254"/>
         <source>Le client a bien été ajouté !</source>
         <oldsource>Le client a bien été ajouté -&gt; </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="304"/>
+        <location filename="mainwindow.cpp" line="306"/>
         <source>Mise à jour client</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="305"/>
+        <location filename="mainwindow.cpp" line="307"/>
         <source>Le client a bien été mis à jour !</source>
         <translation type="unfinished"></translation>
     </message>

@@ -1,8 +1,12 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "listWidget.h"
 #include <QMessageBox>
 #include <QDragEnterEvent>
 #include <QDebug>
+#include <QCalendarWidget>
+#include <QTimeEdit>
+#include <QLayout>
 
 #include <iostream>
 
@@ -20,13 +24,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->listWidgetReserv->setAcceptDrops(false);
     ui->listWidgetReserv->setDragEnabled(false);
-    //ui->listWidgetDrop->setDragEnabled(false);
-
-    /*ui->listWidgetDrag->insertItem(1, new QListWidgetItem(QIcon(":user-max.png"), "Jean-Louis Dureuille"));
-    ui->listWidgetDrag->insertItem(2, new QListWidgetItem(QIcon(":user-max.png"), "Marc Lendo"));
-    ui->listWidgetDrag->insertItem(3, new QListWidgetItem(QIcon(":user-max.png"), "Sophie Marteno"));
-    ui->listWidgetDrag->insertItem(4, new QListWidgetItem(QIcon(":user-max.png"), "Damien Prébau"));
-    ui->listWidgetDrag->insertItem(5, new QListWidgetItem(QIcon(":user-max.png"), "Alick Mouriesse"));*/
 
     updateListClients();
 
@@ -59,6 +56,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->comboBoxInfoPay->addItem("Virement");
     ui->comboBoxInfoPay->addItem("Liquide");
 
+    QStringList tableHeaderReservation;
+    tableHeaderReservation << "Id" << "Client" << "Début" << "Fin";
+    ui->tableWidgetReservation->setHorizontalHeaderLabels(tableHeaderReservation);
+
+    connect(ui->listWidgetDrop, &ListWidget::newReservationSent, this, &MainWindow::onNewReservation);
 }
 
 MainWindow::~MainWindow()
@@ -316,4 +318,41 @@ void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
             ui->listWidgetDrag->item(i)->setHidden(true);
         }
     }
+}
+
+void MainWindow::onNewReservation(const QString & name, const int & clientId)
+{
+    QMessageBox mb;
+    QLabel infoStart;
+    QLabel infoStop;
+    QCalendarWidget calendarStart;
+    QCalendarWidget calendarEnd;
+    QTimeEdit timeStart;
+    QTimeEdit timeEnd;
+
+    infoStart.setText("Date ↑ et heure ↓ de début");
+    infoStop.setText("Date ↑ et heure ↓ de fin");
+
+    timeStart.setTime(QTime(QTime::currentTime().hour(), QTime::currentTime().minute()));
+    timeEnd.setTime(QTime(QTime::currentTime().hour(), QTime::currentTime().minute()));
+
+    mb.setText("Nouvelle réservation pour " + name);
+    mb.layout()->addWidget(&calendarStart);
+    mb.layout()->addWidget(&calendarEnd);
+    mb.layout()->addWidget(&infoStart);
+    mb.layout()->addWidget(&infoStop);
+    mb.layout()->addWidget(&timeStart);
+    mb.layout()->addWidget(&timeEnd);
+    mb.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
+    mb.setDefaultButton(QMessageBox::Save);
+
+    mb.exec();
+
+    QString formatStart = calendarStart.selectedDate().toString("dd-MM-yy") + " " + timeStart.time().toString("hh:mm");
+    QString formatStop = calendarEnd.selectedDate().toString("dd-MM-yy") + " " + timeEnd.time().toString("hh:mm");
+
+    ui->tableWidgetReservation->setItem(0, 0, new QTableWidgetItem("CH15"));
+    ui->tableWidgetReservation->setItem(0, 1, new QTableWidgetItem(name));
+    ui->tableWidgetReservation->setItem(0, 2, new QTableWidgetItem(formatStart));
+    ui->tableWidgetReservation->setItem(0, 3, new QTableWidgetItem(formatStop));
 }

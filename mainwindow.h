@@ -29,6 +29,8 @@ protected:
     void updateListClients();
 
 private slots:
+    void onNewReservation(const QString &, const int &);
+
     void on_pushButtonLogin_clicked();
     void on_listWidgetReserv_itemDoubleClicked(QListWidgetItem *item);
     void on_pushButtonBackHome_clicked();
