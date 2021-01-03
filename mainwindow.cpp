@@ -99,10 +99,29 @@ void MainWindow::updateListClients()
         }
         itemClient->setData(Qt::UserRole, clients[i].getId());
 
-        ui->listWidgetDrag->insertItem(1, itemClient);
+        ui->listWidgetDrag->insertItem(0, itemClient);
     }
     ui->labelClientCount->setText(QString::fromStdString("Clients total : " + std::to_string(clients.size())));
     ui->listWidgetDrag->repaint();
+}
+
+void MainWindow::updateListReservations()
+{
+    int countViewType = 0;
+
+    ui->tableWidgetReservation->clear();
+    ui->tableWidgetReservation->setRowCount(0);
+    for (size_t i = 0; i < reservations.size(); i++) {
+        if (reservations[i].getType() == nameSection) {
+            ui->tableWidgetReservation->setRowCount(ui->tableWidgetReservation->rowCount()+1);
+            ui->tableWidgetReservation->setItem(countViewType, 0, new QTableWidgetItem("#" + QString::number(reservations[i].getId())));
+            ui->tableWidgetReservation->setItem(countViewType, 1, new QTableWidgetItem(QString::fromStdString(reservations[i].getName())));
+            ui->tableWidgetReservation->setItem(countViewType, 2, new QTableWidgetItem(QString::fromStdString(reservations[i].getStartDateTime())));
+            ui->tableWidgetReservation->setItem(countViewType, 3, new QTableWidgetItem(QString::fromStdString(reservations[i].getEndDateTime())));
+            countViewType++;
+        }
+    }
+    ui->tableWidgetReservation->repaint();
 }
 
 void MainWindow::on_pushButtonLogin_clicked()
@@ -114,11 +133,14 @@ void MainWindow::on_pushButtonLogin_clicked()
 
 void MainWindow::on_listWidgetReserv_itemDoubleClicked(QListWidgetItem *item)
 {
+    nameSection = item->text().toStdString();
     this->changeMenuData("Réservation " + item->text());
 
     if (item->data(0).toString().contains("EXIT")) {
         ui->stackedWidget->setCurrentIndex(0);
+        ui->lineEditID->clear();
     } else {
+        updateListReservations();
         ui->stackedWidgetRight->setCurrentIndex(1);
     }
 }
@@ -346,13 +368,80 @@ void MainWindow::onNewReservation(const QString & name, const int & clientId)
     mb.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
     mb.setDefaultButton(QMessageBox::Save);
 
-    mb.exec();
+    if (mb.exec() == QMessageBox::Save) {
+        QString formatStart = calendarStart.selectedDate().toString("dd-MM-yy") + " " + timeStart.time().toString("hh:mm");
+        QString formatStop = calendarEnd.selectedDate().toString("dd-MM-yy") + " " + timeEnd.time().toString("hh:mm");
 
-    QString formatStart = calendarStart.selectedDate().toString("dd-MM-yy") + " " + timeStart.time().toString("hh:mm");
-    QString formatStop = calendarEnd.selectedDate().toString("dd-MM-yy") + " " + timeEnd.time().toString("hh:mm");
+        Reservation newReservation{
+            clientId,
+            nameSection,
+            name.toUtf8().constData(),
+            formatStart.toUtf8().constData(),
+            formatStop.toUtf8().constData()
+        };
 
-    ui->tableWidgetReservation->setItem(0, 0, new QTableWidgetItem("CH15"));
-    ui->tableWidgetReservation->setItem(0, 1, new QTableWidgetItem(name));
-    ui->tableWidgetReservation->setItem(0, 2, new QTableWidgetItem(formatStart));
-    ui->tableWidgetReservation->setItem(0, 3, new QTableWidgetItem(formatStop));
+        reservations.push_back(newReservation);
+
+        updateListReservations();
+
+        QMessageBox::information(
+            this,
+            tr("Nouvelle réservation"),
+            tr("La nouvelle réservation a bien été ajouté !")
+        );
+    }
+}
+
+void MainWindow::on_tableWidgetReservation_itemDoubleClicked(QTableWidgetItem *item)
+{
+    int selectedId;
+    int indexItem = 0;
+
+    if (item->text().contains("#")) {
+        selectedId = std::stoi(item->text().replace(0, 1, "").toStdString());
+
+        for (size_t i = 0; i < reservations.size(); i++) {
+            if (reservations[i].getId() == selectedId) {
+                indexItem = i;
+            }
+        }
+
+        QMessageBox mb;
+        QLabel infoReserv;
+
+        mb.setStandardButtons(QMessageBox::Reset | QMessageBox::Close);
+        mb.setDefaultButton(QMessageBox::Reset);
+
+        infoReserv.setText(QString::fromStdString("Type de réservation: " + nameSection
+                                                  + "\n\nIdentifiant réservation: #" + std::to_string(selectedId)
+                                                  + "\n\nIdentifiant client: #" + std::to_string(reservations[indexItem].getClientId())
+                                                  + "\n\nNom du client: " + reservations[indexItem].getName()
+                                                  + "\n\nCommence le: " + reservations[indexItem].getStartDateTime()
+                                                  + "\n\nPrend fin le: " + reservations[indexItem].getEndDateTime()));
+
+        mb.layout()->addWidget(&infoReserv);
+
+        if (mb.exec() == QMessageBox::Reset) {
+            for (size_t i = 0; i < reservations.size(); i++) {
+                if (reservations[i].getId() == selectedId) {
+                    reservations.erase(reservations.begin() + i);
+                }
+            }
+
+            updateListReservations();
+
+            QMessageBox::information(
+                this,
+                tr("Suppression de la reservation"),
+                tr("La réservation e bien été supprimée !")
+            );
+        }
+
+    } else {
+        QMessageBox::warning(
+            this,
+            tr("Erreur de sélection"),
+            tr("Pour afficher les détails de la réservation, merci de sélectionner son ID !")
+        );
+    }
 }

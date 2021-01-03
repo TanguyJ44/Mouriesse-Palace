@@ -144,7 +144,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="472"/>
-        <location filename="mainwindow.ui" line="1235"/>
+        <location filename="mainwindow.ui" line="1231"/>
         <source>&lt;- Retour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -174,57 +174,87 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1253"/>
+        <location filename="mainwindow.ui" line="1249"/>
         <source>Réservation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1269"/>
+        <location filename="mainwindow.ui" line="1265"/>
         <source>Il reste 0 réservations de disponible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="173"/>
-        <location filename="mainwindow.cpp" line="189"/>
+        <location filename="mainwindow.cpp" line="195"/>
+        <location filename="mainwindow.cpp" line="211"/>
         <source>Supprimer un client</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="174"/>
+        <location filename="mainwindow.cpp" line="196"/>
         <source>Étes vous sûr de vouloir supprimer le client </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="190"/>
+        <location filename="mainwindow.cpp" line="212"/>
         <source>Vous devez sélectionner un client avant de le supprimer !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="227"/>
-        <location filename="mainwindow.cpp" line="253"/>
+        <location filename="mainwindow.cpp" line="249"/>
+        <location filename="mainwindow.cpp" line="275"/>
         <source>Ajouter un client</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="228"/>
+        <location filename="mainwindow.cpp" line="250"/>
         <source>Vous devez donner un Nom et un Prénom pour créer un client !</source>
         <oldsource>Vous devez donner au moins un Nom et un Prénom pour créer un client !</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="254"/>
+        <location filename="mainwindow.cpp" line="276"/>
         <source>Le client a bien été ajouté !</source>
         <oldsource>Le client a bien été ajouté -&gt; </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="306"/>
+        <location filename="mainwindow.cpp" line="328"/>
         <source>Mise à jour client</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="307"/>
+        <location filename="mainwindow.cpp" line="329"/>
         <source>Le client a bien été mis à jour !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="389"/>
+        <source>Nouvelle réservation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="390"/>
+        <source>La nouvelle réservation a bien été ajouté !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="435"/>
+        <source>Suppression de la reservation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="436"/>
+        <source>La réservation e bien été supprimée !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="443"/>
+        <source>Erreur de sélection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="444"/>
+        <source>Pour afficher les détails de la réservation, merci de sélectionner son ID !</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

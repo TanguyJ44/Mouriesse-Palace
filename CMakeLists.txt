@@ -34,10 +34,12 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         listWidget.cpp
         client.cpp
+        reservation.cpp
         mainwindow.h
-        mainwindow.ui
         listWidget.h
+        reservation.h
         client.h
+        mainwindow.ui
         ${TS_FILES}
 )
 

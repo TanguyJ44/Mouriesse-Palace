@@ -2,12 +2,14 @@
 #define MAINWINDOW_H
 
 #include "client.h"
+#include "reservation.h"
 #include <QMainWindow>
 #include <QWidget>
 #include <QListWidgetItem>
 #include <QString>
 #include <QDropEvent>
 #include <QDragEnterEvent>
+#include <QTableWidgetItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,8 +27,10 @@ public:
 
 protected:
     QListWidgetItem* createItem(char* name);
+
     void changeMenuData(QString name);
     void updateListClients();
+    void updateListReservations();
 
 private slots:
     void onNewReservation(const QString &, const int &);
@@ -55,9 +59,13 @@ private slots:
 
     void on_lineEditSearch_textChanged(const QString &arg1);
 
+    void on_tableWidgetReservation_itemDoubleClicked(QTableWidgetItem *item);
+
 private:
     Ui::MainWindow *ui;
+    std::string nameSection;
     std::vector <Client> clients;
+    std::vector <Reservation> reservations;
 };
 
 #endif // MAINWINDOW_H
