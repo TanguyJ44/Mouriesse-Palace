@@ -23,14 +23,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void clearAddClient();
-
 protected:
     QListWidgetItem* createItem(char* name);
 
     void changeMenuData(QString name);
+    void clearAddClient();
     void updateListClients();
     void updateListReservations();
+    int generateRoomId();
 
 private slots:
     void onNewReservation(const QString &, const int &);
@@ -66,6 +66,7 @@ private:
     std::string nameSection;
     std::vector <Client> clients;
     std::vector <Reservation> reservations;
+    std::map<std::string, int> reservTypeCount;
 };
 
 #endif // MAINWINDOW_H

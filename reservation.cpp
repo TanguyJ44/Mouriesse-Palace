@@ -9,9 +9,9 @@ Reservation::Reservation()
 {
 }
 
-Reservation::Reservation(int clientId, std::string type, std::string clientName,
+Reservation::Reservation(int clientId, int onlyId, std::string type, std::string clientName,
                          std::string startDateTime, std::string endDateTime)
-                : rClientId(clientId), rType(type), rClientName(clientName),
+                : rClientId(clientId), rOnlyId(onlyId), rType(type), rClientName(clientName),
                   rStartDateTime(startDateTime), rEndDateTime(endDateTime)
 {
     createId();
@@ -22,6 +22,7 @@ Reservation::Reservation(const Reservation &other)
     rId = other.rId;
     rType = other.rType;
     rClientId = other.rClientId;
+    rOnlyId = other.rOnlyId;
     rClientName = other.rClientName;
     rStartDateTime = other.rStartDateTime;
     rEndDateTime = other.rEndDateTime;
@@ -41,6 +42,11 @@ int Reservation::getId() const
 int Reservation::getClientId() const
 {
     return rClientId;
+}
+
+int Reservation::getOnlyId() const
+{
+    return rOnlyId;
 }
 
 std::string Reservation::getType() const
@@ -68,6 +74,11 @@ std::string Reservation::getEndDateTime() const
 void Reservation::setClientId(const int clientId)
 {
     rClientId = clientId;
+}
+
+void Reservation::setOnlyId(const int onlyId)
+{
+    rOnlyId = onlyId;
 }
 
 void Reservation::setType(const std::string type)
