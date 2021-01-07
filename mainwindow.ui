@@ -125,9 +125,9 @@ color: white;</string>
        <widget class="QLabel" name="labelTitleList">
         <property name="geometry">
          <rect>
-          <x>110</x>
+          <x>10</x>
           <y>10</y>
-          <width>261</width>
+          <width>471</width>
           <height>33</height>
          </rect>
         </property>
@@ -681,9 +681,9 @@ color: white;</string>
        <widget class="QLabel" name="labelTitleClientAdd">
         <property name="geometry">
          <rect>
-          <x>80</x>
+          <x>20</x>
           <y>20</y>
-          <width>311</width>
+          <width>461</width>
           <height>33</height>
          </rect>
         </property>
@@ -1064,9 +1064,9 @@ color: white;</string>
        <widget class="QLabel" name="labelTitleReserv">
         <property name="geometry">
          <rect>
-          <x>90</x>
+          <x>0</x>
           <y>20</y>
-          <width>311</width>
+          <width>471</width>
           <height>33</height>
          </rect>
         </property>
@@ -1169,7 +1169,7 @@ color: white;</string>
          <bool>true</bool>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-image: url(&quot;C:/Users/Tanguy/Desktop/res/drop_zone.png&quot;);
+         <string notr="true">background-image: url(&quot;:drop_zone.png&quot;);
 background-position: center;
 border: 0px;</string>
         </property>

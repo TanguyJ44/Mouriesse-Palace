@@ -18,19 +18,28 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    // linké ui à la frame
     ui->setupUi(this);
 
+    // taille de la frame
     setFixedSize(1000, 700);
 
+    // mettre les vues en affichage de lancement
     ui->stackedWidget->setCurrentIndex(0);
     ui->stackedWidgetLeft->setCurrentIndex(0);
     ui->stackedWidgetRight->setCurrentIndex(0);
 
+    // gestion du D&G
     ui->listWidgetReserv->setAcceptDrops(false);
     ui->listWidgetReserv->setDragEnabled(false);
 
+    // mise à jour de la liste des clients
     updateListClients();
 
+    // ajout du background à la login page
+    ui->labelBackground->setPixmap(QPixmap(":final_bg.png"));
+
+    // création des diffèrentes activités possibles
     ui->listWidgetReserv->insertItem(1, this->createItem((char*) "Chambres"));
     ui->listWidgetReserv->insertItem(2, this->createItem((char*) "Repas"));
     ui->listWidgetReserv->insertItem(3, this->createItem((char*) "SPA"));
@@ -43,6 +52,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->listWidgetReserv->insertItem(10, this->createItem((char*) "Bateaux"));
     ui->listWidgetReserv->insertItem(11, this->createItem((char*) "Spectacles"));
     ui->listWidgetReserv->insertItem(12, this->createItem((char*) "EXIT"));
+
+    // ajout des attributs aux comboBox
 
     ui->comboBoxAddGenre->addItem("Monsieur");
     ui->comboBoxAddGenre->addItem("Madame");
@@ -60,12 +71,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->comboBoxInfoPay->addItem("Virement");
     ui->comboBoxInfoPay->addItem("Liquide");
 
+    // ajout des libelés à la table de réservation
     QStringList tableHeaderReservation;
     tableHeaderReservation << "Id" << "Client" << "Début" << "Fin";
     ui->tableWidgetReservation->setHorizontalHeaderLabels(tableHeaderReservation);
 
+    // connection au signal du drag&drop pour listWidget
     connect(ui->listWidgetDrop, &ListWidget::newReservationSent, this, &MainWindow::onNewReservation);
 
+    // ajout de la quantitée d'activité disponible
     reservTypeCount["Réservation Chambres"] = 120;
     reservTypeCount["Réservation Repas"] = 120;
     reservTypeCount["Réservation SPA"] = 2;
@@ -84,6 +98,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+// ajouter tous les items d'activité disponible au QListWidget
 QListWidgetItem* MainWindow::createItem(char* name)
 {
     QListWidgetItem *item = new QListWidgetItem;
@@ -96,12 +111,14 @@ QListWidgetItem* MainWindow::createItem(char* name)
     return item;
 }
 
+// mettre à jour les données titre et count pour les réservations
 void MainWindow::changeMenuData(QString name)
 {
     ui->labelTitleFocus->setText(name);
     ui->labelCountReserv->setText(QString::fromStdString("Il reste " + std::to_string(reservTypeCount[name.toUtf8().constData()]) + " réservations de disponible"));
 }
 
+// mettre à jour la liste de tous les clients
 void MainWindow::updateListClients()
 {
     ui->listWidgetDrag->clear();
@@ -122,6 +139,7 @@ void MainWindow::updateListClients()
     ui->listWidgetDrag->repaint();
 }
 
+// mettre à jour la liste des réservation en fonction de chaques activités
 void MainWindow::updateListReservations()
 {
     int countViewType = 0;
@@ -141,6 +159,7 @@ void MainWindow::updateListReservations()
     ui->tableWidgetReservation->repaint();
 }
 
+// système de connexion avec id
 void MainWindow::on_pushButtonLogin_clicked()
 {
     if (!ui->lineEditID->text().isEmpty()) {
@@ -157,6 +176,7 @@ void MainWindow::on_pushButtonLogin_clicked()
 
 }
 
+// changer les titres des cathégorie de réservations
 void MainWindow::on_listWidgetReserv_itemDoubleClicked(QListWidgetItem *item)
 {
     nameSection = item->text().toStdString();
@@ -171,11 +191,13 @@ void MainWindow::on_listWidgetReserv_itemDoubleClicked(QListWidgetItem *item)
     }
 }
 
+// retour au home menu
 void MainWindow::on_pushButtonBackHome_clicked()
 {
     ui->stackedWidgetRight->setCurrentIndex(0);
 }
 
+// remplire les champs info de client
 void MainWindow::on_listWidgetDrag_itemDoubleClicked(QListWidgetItem *item)
 {
     Client clientInfo;
@@ -208,11 +230,13 @@ void MainWindow::on_listWidgetDrag_itemDoubleClicked(QListWidgetItem *item)
     ui->stackedWidgetLeft->setCurrentIndex(1);
 }
 
+// aller à la page de création des clients
 void MainWindow::on_pushButtonAddClient_clicked()
 {
     ui->stackedWidgetLeft->setCurrentIndex(2);
 }
 
+// supprimer un client sélectionné
 void MainWindow::on_pushButtonDelClient_clicked()
 {
     if (ui->listWidgetDrag->selectedItems().size() != 0) {
@@ -240,6 +264,7 @@ void MainWindow::on_pushButtonDelClient_clicked()
     }
 }
 
+// vider les champs de création des clients
 void MainWindow::clearAddClient()
 {
     ui->comboBoxAddGenre->setCurrentIndex(0);
@@ -254,17 +279,20 @@ void MainWindow::clearAddClient()
     ui->spinBoxAddAssoc->setValue(0);
 }
 
+//retourner à la page des clients
 void MainWindow::on_pushButtonInfoBack_clicked()
 {
     ui->stackedWidgetLeft->setCurrentIndex(0);
 }
 
+// on affiche la page add client
 void MainWindow::on_pushButtonAddCancel_clicked()
 {
     clearAddClient();
     ui->stackedWidgetLeft->setCurrentIndex(0);
 }
 
+// création d'un nouveau client
 void MainWindow::on_pushButtonAddValide_clicked()
 {
     // Create client
@@ -306,6 +334,7 @@ void MainWindow::on_pushButtonAddValide_clicked()
     }
 }
 
+// petite fonction de swipe entre le logo homme et femme
 void MainWindow::on_comboBoxAddGenre_currentIndexChanged(int index)
 {
     if (index == 0) {
@@ -315,6 +344,9 @@ void MainWindow::on_comboBoxAddGenre_currentIndexChanged(int index)
     }
 }
 
+// petite fonction de swipe entre le logo homme et femme
+// exactement la même qu'au dessus, mais comme celle du haut voulais une
+// petite soeur, on a décidé de la copier coller avec un autre nom !
 void MainWindow::on_comboBoxInfoGenre_currentIndexChanged(int index)
 {
     if (index == 0) {
@@ -324,6 +356,7 @@ void MainWindow::on_comboBoxInfoGenre_currentIndexChanged(int index)
     }
 }
 
+// ici on met à jour les infos sur les clients
 void MainWindow::on_pushButtonInfoUpdate_clicked()
 {
     int indexClient = 0;
@@ -356,7 +389,8 @@ void MainWindow::on_pushButtonInfoUpdate_clicked()
     );
 }
 
-
+// afficher les clients qui corresponde à la recherche
+// la légende raconte que le client A. Mouriesse ne s'affichera jamais x)
 void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
 {
     for (int i = 0; i < ui->listWidgetDrag->count(); i++) {
@@ -368,6 +402,9 @@ void MainWindow::on_lineEditSearch_textChanged(const QString &arg1)
     }
 }
 
+// une chambre ... c'est bien !
+// mais avec un numéro ... c'est mieux !
+// ici on va générer un numéro de chambre en vérifiant qu'il soit dispo
 int MainWindow::generateRoomId()
 {
     int idGenerated = 0;
@@ -384,6 +421,8 @@ int MainWindow::generateRoomId()
     return idGenerated%100;
 }
 
+// ici on ce dépatouille pour essayer tant bien que mal de créer une réservation
+// name avec le nom du client, clientID pour son ID.
 void MainWindow::onNewReservation(const QString & name, const int & clientId)
 {
     QMessageBox mb;
@@ -449,6 +488,8 @@ void MainWindow::onNewReservation(const QString & name, const int & clientId)
 
 }
 
+// attention aux yeux ! Ici on affiche les infos de la réservation sélectionné
+// accrochez vous !
 void MainWindow::on_tableWidgetReservation_itemDoubleClicked(QTableWidgetItem *item)
 {
     int selectedId;

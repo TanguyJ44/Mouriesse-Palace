@@ -17,6 +17,7 @@ Reservation::Reservation(int clientId, int onlyId, std::string type, std::string
     createId();
 }
 
+// Constructeur par copie
 Reservation::Reservation(const Reservation &other)
 {
     rId = other.rId;
@@ -105,6 +106,7 @@ void Reservation::setEndDateTime(const std::string endDateTime)
 
 void Reservation::createId()
 {
+    // Création d'un moteur random à 4 chiffres
     std::default_random_engine re(time(0));
     std::uniform_int_distribution<int> distrib{1000, 9999};
 

@@ -17,6 +17,7 @@ Client::Client(int genre, int payment, int members, std::string firstName, std::
     createId();
 }
 
+// Constructeur par copie
 Client::Client(const Client &other)
 {
     cId = other.cId;
@@ -160,6 +161,7 @@ void Client::setInfo(const std::string info)
 
 void Client::createId()
 {
+    // Création d'un moteur random à 9 chiffres
     std::default_random_engine re(time(0));
     std::uniform_int_distribution<int> distrib{100000000, 999999999};
 
